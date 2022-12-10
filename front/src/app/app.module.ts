@@ -9,6 +9,8 @@ import { MainFormComponent } from './main-form/main-form.component';
 import { AmazonPageComponent } from './amazon-page/amazon-page.component';
 import { NoPageComponent } from './no-page/no-page.component';
 import { ReadyPageComponent } from './ready-page/ready-page.component';
+import { LinksCatalogComponent } from './links-catalog/links-catalog.component';
+import { GuidePostComponent } from './guide-post/guide-post.component';
 
 @NgModule({
   declarations: [
@@ -18,7 +20,9 @@ import { ReadyPageComponent } from './ready-page/ready-page.component';
     MainFormComponent,
     AmazonPageComponent,
     NoPageComponent,
-    ReadyPageComponent
+    ReadyPageComponent,
+    LinksCatalogComponent,
+    GuidePostComponent
   ],
   imports: [
     BrowserModule,
