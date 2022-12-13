@@ -1,0 +1,19 @@
+.header {
+    .logo {
+        max-height: 42px;
+        margin: 70px 0 70px 82px;
+    }
+    .header--gradient {
+        background: transparent linear-gradient(141deg, #FF9C03 0%, #FFAC2C 100%) 0% 0% no-repeat padding-box;
+        height: 200px;
+        position: absolute;
+        top: -125px;
+        width: 100%;
+        right: -324px;
+        transform: rotate(10deg);
+        @media (max-width: 1000px) {
+            right: -50px;
+            top: -150px;
+        }
+    }
+}
