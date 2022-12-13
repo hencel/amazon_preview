@@ -1,1 +1,45 @@
-/* You can add global styles to this file, and also import other style files */
+$primary: #ff9b00;
+$font-color: #000;
+
+@mixin common-btn {
+    background-color: $primary;
+    border: 2px solid $primary;
+}
+* {
+    font-family: 'AmazonEmber', sans-serif;
+}
+
+form {
+    .form-control {
+        border: 2px solid $primary;
+        border-radius: 0;
+    }
+}
+.btn {
+    &.btn-primary, &.ng-fa-icon {
+        border: 2px solid $primary;
+        color: $font-color;
+        background: linear-gradient(to left, white 50%, $primary 50%) right;
+        background-size: 200%;
+        transition: .5s ease-out;
+        &:hover {
+            @include common-btn;
+            background-position: left;
+            color: white;
+            &.ng-fa-icon {
+                @include common-btn;
+                background-position: left;
+                color: white;
+            }
+        }
+        &.btn-main-submit {
+            min-width: 150px;
+            display: flex;
+            justify-content: space-between;
+            font-weight: bold
+        }
+    }
+    &.btn-secondary {
+        @include common-btn;
+    }
+}
