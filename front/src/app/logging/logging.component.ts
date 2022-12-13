@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { faArrowRight } from '@fortawesome/free-solid-svg-icons';
 
 @Component({
   selector: 'app-logging',
@@ -7,9 +8,9 @@ import { Component, OnInit } from '@angular/core';
 })
 export class LoggingComponent implements OnInit {
 
+  arrowRightIcon = faArrowRight
   constructor() { }
 
   ngOnInit(): void {
   }
-
 }

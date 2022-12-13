@@ -11,6 +11,7 @@ import { NoPageComponent } from './no-page/no-page.component';
 import { ReadyPageComponent } from './ready-page/ready-page.component';
 import { LinksCatalogComponent } from './links-catalog/links-catalog.component';
 import { GuidePostComponent } from './guide-post/guide-post.component';
+import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 
 @NgModule({
   declarations: [
@@ -26,7 +27,8 @@ import { GuidePostComponent } from './guide-post/guide-post.component';
   ],
   imports: [
     BrowserModule,
-    AppRoutingModule
+    AppRoutingModule,
+    FontAwesomeModule
   ],
   providers: [],
   bootstrap: [AppComponent]
