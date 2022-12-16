@@ -1,0 +1,57 @@
+@import "./app/shared/variables.scss";
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap');
+
+* {
+    font-family: 'Poppins', sans-serif;
+}
+
+
+form {
+    .form-control {
+        border: 3px solid $primary;
+        border-radius: 0;
+        box-shadow: 0px 10px 25px $input-bg;
+        background: $input-bg;
+        height: 60px;
+        padding: 22px 20px 22px 26px;
+        &:focus {
+            background-color: $input-bg;
+            border-color: $primary;
+            box-shadow: 0px 10px 25px $input-bg;
+        }
+    }
+    .form-label {
+        @include common-label-text;
+        font-weight: bold;
+        padding-left: 25px;
+    }
+}
+.btn {
+    padding: 16px !important;
+    &.btn-main-submit, &.ng-fa-icon {
+        border: 2px solid $primary;
+        color: $font-color;
+        background: linear-gradient(to left, #fff 50%, $primary 50%) right;
+        background-size: 200%;
+        transition: .5s ease-out;
+        box-shadow: 0px 10px 25px $input-bg;
+        &:hover {
+            @include common-btn;
+            background-position: left;
+            color: #fff;
+            &.ng-fa-icon {
+                @include common-btn;
+                background-position: left;
+                color: #fff;
+            }
+        }
+        &.btn-main-submit {
+            margin-top: 50px;
+            min-width: 150px;
+            display: flex;
+            justify-content: space-between;
+            font-weight: bold;
+            @include common-label-text;
+        }
+    }
+}

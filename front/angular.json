@@ -32,7 +32,6 @@
             ],
             "styles": [
               "src/styles.scss",
-              "src/fonts.scss",
               "node_modules/bootstrap/dist/css/bootstrap.css"
             ],
             "scripts": [
