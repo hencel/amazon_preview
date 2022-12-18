@@ -15,35 +15,72 @@
                     <textarea type="text" class="form-control input-3-lines" id="mainFormMark"></textarea>
                 </div>
             </div>
-            <label for="mainFormMark" class="form-label">Specyfikacja</label>
+            <ng-container >
+                <label class="form-label">Specyfikacja</label>
 
                 <div class="row justify-content-between" 
                     *ngFor="let element of specDataArray; let i = index"
                     id="specRow_{{i}}">
-                    <div class="col-12 col-md-5">
-                        <div class="mb-3">
-                            <input type="text" class="form-control" [(ngModel)]="element.title" name="title_{{i}}" (keyup)="onKey($event)">
+                    <div class="col d-flex flex-row justify-content-between">
+                        <div class="mb-3 me-2">
+                            <input type="text" class="form-control" 
+                            [(ngModel)]="element.title" 
+                            name="title_{{i}}" 
+                            (keyup)="onKey($event)">
+                        </div>
+                        <div class="mb-3 ms-2">
+                            <input type="text" class="form-control" 
+                            [(ngModel)]="element.value" 
+                            name="value_{{i}}">
                         </div>
                     </div>
-                    <div class="col-12 col-md-5">
-                        <div class="mb-3">
-                            <input type="text" class="form-control" [(ngModel)]="element.value" name="value_{{i}}">
-                        </div>
-                    </div>
+
                     <div class="w-auto text-end">
-                        <button class="btn btn-secondary" (click)="$event.preventDefault(); removeRow(i);">
-                            <div class="remove-icon"></div>
+                        <button class="btn btn-secondary btn-minus" (click)="$event.preventDefault(); removeRow(i);">
+                            <fa-icon [icon]="minusIcon" class="minus-icon"></fa-icon>
                         </button>
                     </div>
                 </div>
-            <div>
-                <button class="btn btn-primary" (click)="$event.preventDefault(); addRow()">Dodaj</button>
-            </div>
-            <div class="d-flex justify-content-end">
-                <button type="submit" class="btn btn-primary btn-main-submit" (click)="$event.preventDefault(); submitForm()">Wyślij 
-                    <fa-icon [icon]="arrowRightIcon"></fa-icon>
-                </button> 
-            </div>
+                <div class="d-flex justify-content-end">
+                    <button class="btn btn-primary btn-plus" (click)="$event.preventDefault(); addRow()">
+                        <fa-icon [icon]="plusIcon" class="plus-icon"></fa-icon>
+                    </button>
+                </div>
+            </ng-container>
+            
+            <ng-container>
+                <label class="form-label">Bulletpointy</label>
+                <div class="row justify-content-between mt-3" 
+                    *ngFor="let element of bulletPointsArray; let i = index"
+                    id="bulletPoint_{{i}}">
+                    <div class="col">
+                        <textarea type="text" class="form-control input-3-lines"
+                        [(ngModel)]="element.text"
+                        (keyup)="onKey($event)"
+                        [ngModelOptions]="{standalone: true}">
+                        </textarea>
+                    </div>
+                    <div class="w-auto text-end">
+                        <button class="btn btn-secondary btn-minus" 
+                        (click)="$event.preventDefault(); removeBulletPoint(i)">
+                            <fa-icon [icon]="minusIcon" class="minus-icon"></fa-icon>
+                        </button>
+                    </div>
+                </div>
+                <div class="d-flex justify-content-end">
+                    <button class="btn btn-primary btn-plus" 
+                    (click)="$event.preventDefault(); addBulletPoint()">
+                        <fa-icon [icon]="plusIcon" class="plus-icon"></fa-icon>
+                    </button>
+                </div>
+
+                <div class="d-flex justify-content-end">
+                    <button class="btn btn-primary btn-main-submit mt-5" 
+                    (click)="$event.preventDefault(); submitForm()">Wyślij 
+                        <fa-icon [icon]="arrowRightIcon"></fa-icon>
+                    </button> 
+                </div>
+            </ng-container>
         </form>
     </div>
 </div>
