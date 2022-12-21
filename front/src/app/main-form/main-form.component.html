@@ -1,86 +1,124 @@
 <div class="row justify-content-center mt-5">
     <h1 class="text-center mb-5">Stwórz szablon listingu</h1>
     <div class="col-12 col-md-8">
-        <form>
+        <form [formGroup]="myForm" (ngSubmit)="submitForm()"> 
 
             <div class="row mb-3">
                 <div class="col-12">
-                    <label for="mainFormMark" class="form-label">Nazwa marki</label>
-                    <input type="text" class="form-control" id="mainFormMark">
+                    <label for="mainFormName" class="form-label">Nazwa marki</label>
+                    <input type="text" class="form-control"
+                    id="mainFormName" name="mainFormName" formControlName="mainFormName">
                 </div>
             </div>
             <div class="row mb-3">
                 <div class="col-12">
-                    <label for="mainFormMark" class="form-label">Tytuł produktu</label>
-                    <textarea type="text" class="form-control input-3-lines" id="mainFormMark"></textarea>
+                    <label for="mainFormTitle" class="form-label">Tytuł produktu</label>
+                    <textarea type="text" class="form-control input-3-lines" 
+                    id="mainFormTitle" name="mainFormTitle" formControlName="mainFormTitle"></textarea>
                 </div>
             </div>
-            <ng-container >
+            <div formArrayName="specDataArray">
                 <label class="form-label">Specyfikacja</label>
-
-                <div class="row justify-content-between" 
-                    *ngFor="let element of specDataArray; let i = index"
-                    id="specRow_{{i}}">
-                    <div class="col d-flex flex-row justify-content-between">
-                        <div class="mb-3 me-2">
-                            <input type="text" class="form-control" 
-                            [(ngModel)]="element.title" 
-                            name="title_{{i}}" 
-                            (keyup)="onKey($event)">
+                
+                <div class="row justify-content-between" *ngFor="let spec of getDataControls('specDataArray'); let i=index">
+                    <ng-container [formGroupName]="i">
+                        <div class="col d-flex flex-row justify-content-between">
+                            <div class="mb-3 me-2">
+                                <input class="form-control" formControlName="title">
+                            </div>
+                            <div class="mb-3 ms-2">
+                                <input class="form-control" formControlName="value">
+                            </div>
                         </div>
-                        <div class="mb-3 ms-2">
-                            <input type="text" class="form-control" 
-                            [(ngModel)]="element.value" 
-                            name="value_{{i}}">
+                        <div class="w-auto text-end">
+                            <button class="btn btn-secondary btn-minus" 
+                            (click)="$event.preventDefault(); removeDataRow('specDataArray', i);">
+                                <fa-icon [icon]="minusIcon" class="minus-icon"></fa-icon>
+                            </button>
                         </div>
-                    </div>
-
-                    <div class="w-auto text-end">
-                        <button class="btn btn-secondary btn-minus" (click)="$event.preventDefault(); removeRow(i);">
-                            <fa-icon [icon]="minusIcon" class="minus-icon"></fa-icon>
-                        </button>
-                    </div>
+                    </ng-container>
+                    
                 </div>
                 <div class="d-flex justify-content-end">
-                    <button class="btn btn-primary btn-plus" (click)="$event.preventDefault(); addRow()">
+                    <button class="btn btn-primary btn-plus" (click)="$event.preventDefault(); addDataRow('specDataArray')">
                         <fa-icon [icon]="plusIcon" class="plus-icon"></fa-icon>
                     </button>
                 </div>
-            </ng-container>
+            </div>
             
-            <ng-container>
+            <div formArrayName="bulletPointsArray">
                 <label class="form-label">Bulletpointy</label>
-                <div class="row justify-content-between mt-3" 
-                    *ngFor="let element of bulletPointsArray; let i = index"
-                    id="bulletPoint_{{i}}">
-                    <div class="col">
-                        <textarea type="text" class="form-control input-3-lines"
-                        [(ngModel)]="element.text"
-                        (keyup)="onKey($event)"
-                        [ngModelOptions]="{standalone: true}">
-                        </textarea>
-                    </div>
-                    <div class="w-auto text-end">
-                        <button class="btn btn-secondary btn-minus" 
-                        (click)="$event.preventDefault(); removeBulletPoint(i)">
-                            <fa-icon [icon]="minusIcon" class="minus-icon"></fa-icon>
-                        </button>
-                    </div>
+
+                <div class="row justify-content-between mb-3" 
+                    *ngFor="let bullet of getDataControls('bulletPointsArray'); let i=index">
+                    <ng-container [formGroupName]="i">
+                        <div class="col d-flex flex-row justify-content-between">
+                            <textarea type="text" class="form-control input-3-lines"
+                            formControlName="text"></textarea>
+                        </div>
+                        <div class="w-auto text-end">
+                            <button class="btn btn-secondary btn-minus" 
+                            (click)="$event.preventDefault(); removeDataRow('bulletPointsArray', i);">
+                                <fa-icon [icon]="minusIcon" class="minus-icon"></fa-icon>
+                            </button>
+                        </div>
+                    </ng-container>
                 </div>
                 <div class="d-flex justify-content-end">
                     <button class="btn btn-primary btn-plus" 
-                    (click)="$event.preventDefault(); addBulletPoint()">
+                    (click)="$event.preventDefault(); addDataRow('bulletPointsArray')">
                         <fa-icon [icon]="plusIcon" class="plus-icon"></fa-icon>
                     </button>
                 </div>
+            </div>
 
-                <div class="d-flex justify-content-end">
-                    <button class="btn btn-primary btn-main-submit mt-5" 
-                    (click)="$event.preventDefault(); submitForm()">Wyślij 
-                        <fa-icon [icon]="arrowRightIcon"></fa-icon>
-                    </button> 
+            <ng-container>
+                <div class="row mt-4">
+                    <div class="col-12 col-md-6">
+                        <label class="form-label">Karta A+</label>
+                        <div>
+                            <label class="custom-file-upload">
+                                <input type="file" class="file-input" id="fileMain"
+                                (change)="onFileSelected($event)" name="fileMain">
+                                {{fileMain || "Wgraj plik (970px szerokości)"}}
+                            </label>
+                        </div>
+                    </div>
                 </div>
             </ng-container>
+
+            <!-- <ng-container>
+                <div class="row mt-4">
+                    <div class="col-12 col-md-6">
+                        <label class="form-label">Grafiki na listing (max 6 grafik)</label>
+                        <div class="row justify-content-between mt-3" 
+                            *ngFor="let element of filesSecondary; let i = index">
+                            <div class="col-6">
+                                <div>
+                                    <label class="custom-file-upload">
+                                        <input type="file" class="file-input" name="filesSecondary{{i}}" id="filesSecondary{{i}}"
+                                        (change)="onFileSelected($event)">
+                                        {{filesSecondary[i].text || "Wgraj plik graficzny"}}
+                                    </label>
+                                </div>
+                            </div>
+        
+                            <div class="w-auto text-end">
+                                <button class="btn btn-secondary btn-minus" (click)="$event.preventDefault(); removeRow(i);">
+                                    <fa-icon [icon]="minusIcon" class="minus-icon"></fa-icon>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </ng-container> -->
+
+            <div class="d-flex justify-content-end">
+                <button class="btn btn-primary btn-main-submit mt-5" type="submit"
+                (submit)="$event.preventDefault(); ">Wyślij 
+                    <fa-icon [icon]="arrowRightIcon"></fa-icon>
+                </button> 
+            </div>
         </form>
     </div>
 </div>
