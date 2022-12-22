@@ -80,7 +80,11 @@
                             <label class="custom-file-upload">
                                 <input type="file" class="file-input" accept="image/*"
                                 (change)="uploadFile($event)">
-                                {{ myForm.value.fileMain ? myForm.value.fileMain.name : "Wgraj plik (970px szerokości)"}}
+                                <ng-container *ngIf="myForm.value.fileMain; else elseBlock">
+                                    <span class="custom-file-upload--text">{{myForm.value.fileMain.name}}</span> <img src="assets/images/icon-ready.svg" />
+                                </ng-container>
+                                <ng-template #elseBlock>
+                                    <span class="custom-file-upload--text">Wgraj plik (970px szerokości)</span> <img src="assets/images/icon-image.svg" /></ng-template>
                             </label>
                         </div>
                     </div>
