@@ -1,5 +1,5 @@
 import { Component, OnInit, NgModule } from '@angular/core';
-import { faArrowRight, faPlus, faMinus, faCheckCircle } from '@fortawesome/free-solid-svg-icons';
+import { faArrowRight, faPlus, faMinus } from '@fortawesome/free-solid-svg-icons';
 import { SpecItem, BulletPoint } from '../model/interfaces';
 // import { NgForm } from '@angular/forms';
 import { FormBuilder, FormGroup, FormArray, FormControl } from '@angular/forms';
@@ -15,9 +15,6 @@ export class MainFormComponent implements OnInit {
   arrowRightIcon = faArrowRight;
   plusIcon = faPlus;
   minusIcon = faMinus;
-  checkIcon = faCheckCircle;
-
-  mainFileText = 'Wgraj plik (970px szerokości) <img src="assets/images/icon-image.svg" />';
 
   filesSecondary: BulletPoint[] = [{
     text: ''
