@@ -78,7 +78,7 @@
                         <label class="form-label">Karta A+</label>
                         <div>
                             <label class="custom-file-upload">
-                                <input type="file" class="file-input"
+                                <input type="file" class="file-input" accept="image/*"
                                 (change)="uploadFile($event)">
                                 {{ myForm.value.fileMain ? myForm.value.fileMain.name : "Wgraj plik (970px szerokości)"}}
                             </label>
