@@ -15,10 +15,7 @@ export class MainFormComponent implements OnInit {
   arrowRightIcon = faArrowRight;
   plusIcon = faPlus;
   minusIcon = faMinus;
-
-  filesSecondary: BulletPoint[] = [{
-    text: ''
-  }]
+  images: any = [];
 
   myForm: FormGroup;
 
@@ -32,7 +29,10 @@ export class MainFormComponent implements OnInit {
       bulletPointsArray: this.builder.array([
         this.initBullet(),
       ]),
-      fileMain: [null]
+      fileMain: [null],
+      filesSecondary: this.builder.array([
+        this.initUploadFiles()
+      ])
     });
   }
 
@@ -50,10 +50,17 @@ export class MainFormComponent implements OnInit {
       text: ['']
     })
   }
+  initUploadFiles(): FormGroup {
+    this.images.push(null);
+    return this.builder.group({
+      file: [null]
+    })
+  }
+  
   getDataControls(target: string) {
     return (this.myForm.get(target) as FormArray).controls;
   }
- 
+
   addDataRow(target: string): void {
     const control = <FormArray>this.myForm.controls[target];
     switch (target) {
@@ -62,6 +69,9 @@ export class MainFormComponent implements OnInit {
         break;
       case 'bulletPointsArray':
         control.push(this.initBullet());
+        break;
+      case 'filesSecondary':
+        control.push(this.initUploadFiles());
         break;
       default:
         break;
@@ -73,44 +83,21 @@ export class MainFormComponent implements OnInit {
     control.removeAt(i);
   }
 
-  uploadFile(event: Event): void {
+  uploadMainFile(event: Event, target: string): void {
     const file = (event.target as HTMLInputElement)?.files?.[0];
+    this.myForm.get(target)?.setValue(file);
     this.myForm.patchValue({
-      fileMain: file
+      target: file
     });
-    this.myForm.get('fileMain')?.setValue(file); //updateValueAndValidity()
+    
   }
 
-  // uploadFile(event: Event) {
-  //   const element = event.currentTarget as HTMLInputElement;
-  //   let fileList: FileList | null = element.files;
-  //   if (fileList) {
-  //     console.log(fileList);
-  //     this.customFile = fileList[0].name;
-  //     console.log(this.customFile);
-  //   }
-  // }
+  onUploadFiles(event: Event, index: number): void {
+    const file = (event.target as HTMLInputElement)?.files?.[0];
+    console.log(file);
 
-  // onFileSelected(event: Event) {
-  //   const target = event.target as HTMLInputElement;
-  //   if (target.files && target.files.length > 0) {
-  //     this.customFile = target.files[0].name;
-  //   }
-  // }
-//   onFileSelected(event: Event) {
-//     const file = (event.target as HTMLInputElement)?.files?.[0];
-
-//     if (file) {
-//       console.log((event.target as Element).id);
-//       this.fileMain = file.name;
-//       // const formData = new FormData();
-//       // formData.append("thumbnail", file);
-//       // const upload$ = this.http.post("/api/thumbnail-upload", formData);
-//       // upload$.subscribe();
-//     }
-
-    
-// }
+    this.images.splice(index, 1, file);
+  }
 
   submitForm() {
     let formData: any = new FormData();
