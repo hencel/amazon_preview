@@ -94,7 +94,6 @@ export class MainFormComponent implements OnInit {
 
   onUploadFiles(event: Event, index: number): void {
     const file = (event.target as HTMLInputElement)?.files?.[0];
-    console.log(file);
 
     this.images.splice(index, 1, file);
   }
@@ -105,6 +104,5 @@ export class MainFormComponent implements OnInit {
     formData.append('mainFormTitle', this.myForm.get('mainFormTitle')?.value);
     // formData.append('avatar', this.form.get('avatar').value);
 
-    console.log(this.myForm);
   }
 }
