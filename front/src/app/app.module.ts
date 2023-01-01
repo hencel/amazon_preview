@@ -14,6 +14,7 @@ import { GuidePostComponent } from './guide-post/guide-post.component';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { FormsModule } from '@angular/forms';
 import { ReactiveFormsModule } from '@angular/forms';
+import { PathLocationStrategy, LocationStrategy } from '@angular/common';
 
 @NgModule({
   declarations: [
@@ -34,7 +35,9 @@ import { ReactiveFormsModule } from '@angular/forms';
     FormsModule, 
     ReactiveFormsModule
   ],
-  providers: [],
+  providers: [{
+    provide: LocationStrategy, useClass: PathLocationStrategy
+  }],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
