@@ -99,10 +99,6 @@ export class MainFormComponent implements OnInit {
   }
 
   submitForm() {
-    let formData: any = new FormData();
-    formData.append('mainFormName', this.myForm.get('mainFormName')?.value);
-    formData.append('mainFormTitle', this.myForm.get('mainFormTitle')?.value);
-    // formData.append('avatar', this.form.get('avatar').value);
-
+    console.log(this.myForm);
   }
 }
