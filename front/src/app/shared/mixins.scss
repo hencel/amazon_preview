@@ -3,10 +3,7 @@
     border: 3px solid $primary;
 }
 @mixin common-label-text {
-    font-size: 14px;
-    line-height: 21px;
-}
-@mixin common-label-text {
     font-size: 16px;
     line-height: 25px;
+    font-weight: bold;
 }

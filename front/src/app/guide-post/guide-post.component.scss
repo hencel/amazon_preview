@@ -1,0 +1,13 @@
+@import "../shared/variables.scss";
+@import "../shared/mixins.scss";
+
+.nav.nav-tabs {
+    .nav-link {
+        @include common-label-text;
+        color: #000;
+        &:not(.active) {
+            font-weight: 400;
+            color: $primary;
+        }
+    }
+}
