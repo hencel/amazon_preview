@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { faArrowRight } from '@fortawesome/free-solid-svg-icons';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-logging',
@@ -9,8 +10,12 @@ import { faArrowRight } from '@fortawesome/free-solid-svg-icons';
 export class LoggingComponent implements OnInit {
 
   arrowRightIcon = faArrowRight
-  constructor() { }
+  constructor(private router: Router) { }
 
   ngOnInit(): void {
+  }
+
+  tempSubmit() {
+    this.router.navigate(['main-form']);
   }
 }
