@@ -27,7 +27,6 @@ form {
     }
     .form-label {
         @include common-label-text;
-        font-weight: bold;
         padding-left: 25px;
     }
 }
@@ -36,7 +35,6 @@ form {
     &.btn-primary {
         box-shadow: 0px 10px 25px $input-bg;
         background: $input-bg;
-        font-weight: bold;
         @include common-label-text;
     } 
     &.btn-primary, &.btn-secondary {

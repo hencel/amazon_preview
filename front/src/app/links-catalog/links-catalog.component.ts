@@ -7,8 +7,10 @@ import { Component, OnInit } from '@angular/core';
 })
 export class LinksCatalogComponent implements OnInit {
 
-  constructor() { }
+  currentElement: string = 'links-catalog';
 
+  constructor() { }
+  
   ngOnInit(): void {
   }
 

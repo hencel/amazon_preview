@@ -12,6 +12,7 @@ import { HttpClient } from '@angular/common/http';
 })
 export class MainFormComponent implements OnInit {
 
+  currentElement: string = 'main-form';
   arrowRightIcon = faArrowRight;
   plusIcon = faPlus;
   minusIcon = faMinus;
