@@ -28,7 +28,7 @@ export class MainFormComponent implements OnInit {
         this.initSpec(),
       ]),
       bulletPointsArray: this.builder.array([
-        this.initBullet(),
+        this.initBullet(0),
       ]),
       fileMain: [null],
       filesSecondary: this.builder.array([
@@ -46,8 +46,9 @@ export class MainFormComponent implements OnInit {
       value: ['']
     });
   }
-  initBullet(): FormGroup {
+  initBullet(counter: number): FormGroup {
     return this.builder.group({
+      count: [counter],
       text: ['']
     })
   }
@@ -69,7 +70,8 @@ export class MainFormComponent implements OnInit {
         control.push(this.initSpec());
         break;
       case 'bulletPointsArray':
-        control.push(this.initBullet());
+        const counter = this.myForm.controls.bulletPointsArray.value.length;
+        control.push(this.initBullet(counter));
         break;
       case 'filesSecondary':
         control.push(this.initUploadFiles());
@@ -82,6 +84,13 @@ export class MainFormComponent implements OnInit {
   removeDataRow(target: string, i: number): void {
     const control = <FormArray>this.myForm.controls[target];
     control.removeAt(i);
+    
+    if(target == 'bulletPointsArray') {
+      for (const { index, value } of control.value.map((value:any, index:any) => ({ index, value }))) {
+        value.count = index;
+      }
+    }
+    
   }
 
   uploadMainFile(event: Event, target: string): void {
