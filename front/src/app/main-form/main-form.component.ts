@@ -4,6 +4,9 @@ import { SpecItem, BulletPoint } from '../model/interfaces';
 // import { NgForm } from '@angular/forms';
 import { FormBuilder, FormGroup, FormArray, FormControl } from '@angular/forms';
 import { HttpClient } from '@angular/common/http';
+import { Router, NavigationExtras } from '@angular/router';
+import { ProjectService } from '../service/project.service';
+import { DomSanitizer } from '@angular/platform-browser';
 
 @Component({
   selector: 'app-main-form',
@@ -20,7 +23,7 @@ export class MainFormComponent implements OnInit {
 
   myForm: FormGroup;
 
-  constructor(private builder: FormBuilder) {
+  constructor(private builder: FormBuilder, private router: Router, private service: ProjectService, private sanitizer: DomSanitizer) {
     this.myForm = this.builder.group({
       mainFormName: [''],
       mainFormTitle: [''],
@@ -94,7 +97,7 @@ export class MainFormComponent implements OnInit {
   }
 
   uploadMainFile(event: Event, target: string): void {
-    const file = (event.target as HTMLInputElement)?.files?.[0];
+    const file = (event.target as HTMLInputElement)?.files?.[0] as File;
     this.myForm.get(target)?.setValue(file);
     this.myForm.patchValue({
       target: file
@@ -109,6 +112,8 @@ export class MainFormComponent implements OnInit {
   }
 
   submitForm() {
-    console.log(this.myForm);
+    this.router.navigate(['ready-page']);
+
+    this.service.passReadyData(this.myForm.value)
   }
 }
