@@ -1,12 +1,9 @@
-import { Component, OnInit, NgModule } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { faArrowRight, faPlus, faMinus } from '@fortawesome/free-solid-svg-icons';
-import { SpecItem, BulletPoint } from '../model/interfaces';
-// import { NgForm } from '@angular/forms';
 import { FormBuilder, FormGroup, FormArray, FormControl } from '@angular/forms';
 import { HttpClient } from '@angular/common/http';
-import { Router, NavigationExtras } from '@angular/router';
+import { Router } from '@angular/router';
 import { ProjectService } from '../service/project.service';
-import { DomSanitizer } from '@angular/platform-browser';
 
 @Component({
   selector: 'app-main-form',
@@ -23,7 +20,7 @@ export class MainFormComponent implements OnInit {
 
   myForm: FormGroup;
 
-  constructor(private builder: FormBuilder, private router: Router, private service: ProjectService, private sanitizer: DomSanitizer) {
+  constructor(private builder: FormBuilder, private router: Router, private service: ProjectService) {
     this.myForm = this.builder.group({
       mainFormName: [''],
       mainFormTitle: [''],
