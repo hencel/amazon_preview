@@ -1,142 +1,220 @@
-<app-guide-post [status]="currentElement"></app-guide-post>
-<div class="row justify-content-center mt-5">
+<div class="container">
+  <app-guide-post [status]="currentElement"></app-guide-post>
+  <div class="row justify-content-center mt-5">
     <h1 class="text-center mb-5">Stwórz szablon listingu</h1>
     <div class="col-12 col-md-8">
-        <form [formGroup]="myForm" (ngSubmit)="submitForm()"> 
+      <form [formGroup]="myForm" (ngSubmit)="submitForm()">
+        <div class="row mb-3">
+          <div class="col-12">
+            <label for="mainFormName" class="form-label">Nazwa marki</label>
+            <input
+              type="text"
+              class="form-control"
+              id="mainFormName"
+              name="mainFormName"
+              formControlName="mainFormName"
+            />
+          </div>
+        </div>
+        <div class="row mb-3">
+          <div class="col-12">
+            <label for="mainFormTitle" class="form-label">Tytuł produktu</label>
+            <textarea
+              type="text"
+              class="form-control input-3-lines"
+              id="mainFormTitle"
+              name="mainFormTitle"
+              formControlName="mainFormTitle"
+            ></textarea>
+          </div>
+        </div>
+        <div formArrayName="specDataArray">
+          <label class="form-label">Specyfikacja</label>
 
-            <div class="row mb-3">
-                <div class="col-12">
-                    <label for="mainFormName" class="form-label">Nazwa marki</label>
-                    <input type="text" class="form-control"
-                    id="mainFormName" name="mainFormName" formControlName="mainFormName">
+          <div
+            class="row justify-content-between"
+            *ngFor="let spec of getDataControls('specDataArray'); let i = index"
+          >
+            <ng-container [formGroupName]="i">
+              <div class="col d-flex flex-row justify-content-between">
+                <div class="mb-3 me-2">
+                  <input class="form-control" formControlName="title" />
                 </div>
-            </div>
-            <div class="row mb-3">
-                <div class="col-12">
-                    <label for="mainFormTitle" class="form-label">Tytuł produktu</label>
-                    <textarea type="text" class="form-control input-3-lines" 
-                    id="mainFormTitle" name="mainFormTitle" formControlName="mainFormTitle"></textarea>
+                <div class="mb-3 ms-2">
+                  <input class="form-control" formControlName="value" />
                 </div>
-            </div>
-            <div formArrayName="specDataArray">
-                <label class="form-label">Specyfikacja</label>
-                
-                <div class="row justify-content-between" *ngFor="let spec of getDataControls('specDataArray'); let i=index">
-                    <ng-container [formGroupName]="i">
-                        <div class="col d-flex flex-row justify-content-between">
-                            <div class="mb-3 me-2">
-                                <input class="form-control" formControlName="title">
-                            </div>
-                            <div class="mb-3 ms-2">
-                                <input class="form-control" formControlName="value">
-                            </div>
-                        </div>
-                        <div class="w-auto text-end">
-                            <button class="btn btn-secondary btn-minus" 
-                            (click)="$event.preventDefault(); removeDataRow('specDataArray', i);">
-                                <fa-icon [icon]="minusIcon" class="minus-icon"></fa-icon>
-                            </button>
-                        </div>
-                    </ng-container>
-                    
-                </div>
-                <div class="d-flex justify-content-end">
-                    <button class="btn btn-primary btn-plus" (click)="$event.preventDefault(); addDataRow('specDataArray')">
-                        <fa-icon [icon]="plusIcon" class="plus-icon"></fa-icon>
-                    </button>
-                </div>
-            </div>
-            
-            <div formArrayName="bulletPointsArray">
-                <label class="form-label">Bulletpointy</label>
-
-                <div class="row justify-content-between mb-3" 
-                    *ngFor="let bullet of getDataControls('bulletPointsArray'); let i=index">
-                    <ng-container [formGroupName]="i">
-                        <div class="col d-flex flex-row justify-content-between">
-                            <textarea type="text" class="form-control input-3-lines"
-                            formControlName="text"></textarea>
-                        </div>
-                        <div class="w-auto text-end">
-                            <button class="btn btn-secondary btn-minus" 
-                            (click)="$event.preventDefault(); removeDataRow('bulletPointsArray', i);">
-                                <fa-icon [icon]="minusIcon" class="minus-icon"></fa-icon>
-                            </button>
-                        </div>
-                    </ng-container>
-                </div>
-                <div class="d-flex justify-content-end">
-                    <button class="btn btn-primary btn-plus" 
-                    (click)="$event.preventDefault(); addDataRow('bulletPointsArray')">
-                        <fa-icon [icon]="plusIcon" class="plus-icon"></fa-icon>
-                    </button>
-                </div>
-            </div>
-
-            <ng-container>
-                <div class="row mt-4">
-                    <div class="col-12 col-md-6">
-                        <label class="form-label">Karta A+</label>
-                        <div>
-                            <label class="custom-file-upload">
-                                <input type="file" class="file-input" accept="image/*"
-                                (change)="uploadMainFile($event, 'fileMain')">
-                                <ng-container *ngIf="myForm.value.fileMain; else elseBlock">
-                                    <span class="custom-file-upload--text">{{myForm.value.fileMain.name}}</span> 
-                                    <img src="assets/images/icon-ready.svg" />
-                                </ng-container>
-                                <ng-template #elseBlock>
-                                    <span class="custom-file-upload--text">Wgraj plik (970px szerokości)</span> 
-                                    <img src="assets/images/icon-image.svg" /></ng-template>
-                            </label>
-                        </div>
-                    </div>
-                </div>
+              </div>
+              <div class="w-auto text-end">
+                <button
+                  class="btn btn-secondary btn-minus"
+                  (click)="
+                    $event.preventDefault(); removeDataRow('specDataArray', i)
+                  "
+                >
+                  <fa-icon [icon]="minusIcon" class="minus-icon"></fa-icon>
+                </button>
+              </div>
             </ng-container>
+          </div>
+          <div class="d-flex justify-content-end">
+            <button
+              class="btn btn-primary btn-plus"
+              (click)="$event.preventDefault(); addDataRow('specDataArray')"
+            >
+              <fa-icon [icon]="plusIcon" class="plus-icon"></fa-icon>
+            </button>
+          </div>
+        </div>
 
-            <div formArrayName="filesSecondary">
-                <label class="form-label mt-4">Grafiki na listing (max 6 grafik)</label>
+        <div formArrayName="bulletPointsArray">
+          <label class="form-label">Bulletpointy</label>
 
-                <div class="row mb-3" 
-                    *ngFor="let file of getDataControls('filesSecondary'); let i=index">
-                    <ng-container [formGroupName]="i">
-                        <div class="col-12 col-md-6 d-flex flex-row justify-content-between">
-                            <label class="custom-file-upload w-100">
-                                <input type="file" class="file-input" accept="image/*" formControlName="file"
-                                (change)="onUploadFiles($event, i)">
-                                <ng-container *ngIf="myForm.value['filesSecondary'][i].file; else elseBlock">
-                                    <span class="custom-file-upload--text">{{images[i]?.name}}</span> 
-                                    <img src="assets/images/icon-ready.svg" />
-                                </ng-container>
-                                <ng-template #elseBlock>
-                                    <span class="custom-file-upload--text">Wgraj plik (970px szerokości)</span> 
-                                    <img src="assets/images/icon-image.svg" /></ng-template>
-                            </label>
-                        </div>
-                        <div class="col-2 text-end">
-                            <button class="btn btn-secondary btn-minus" 
-                            (click)="$event.preventDefault(); removeDataRow('filesSecondary', i);">
-                                <fa-icon [icon]="minusIcon" class="minus-icon"></fa-icon>
-                            </button>
-                        </div>
-                    </ng-container>
-                </div>
-                <div class="row">
-                    <div class="col-12 col-md-8 d-flex justify-content-end">
-                        <button class="btn btn-primary btn-plus" 
-                        (click)="$event.preventDefault(); addDataRow('filesSecondary')">
-                            <fa-icon [icon]="plusIcon" class="plus-icon"></fa-icon>
-                        </button>
-                    </div>
-                </div>
+          <div
+            class="row justify-content-between mb-3"
+            *ngFor="
+              let bullet of getDataControls('bulletPointsArray');
+              let i = index
+            "
+          >
+            <ng-container [formGroupName]="i">
+              <div class="col d-flex flex-row justify-content-between">
+                <textarea
+                  type="text"
+                  class="form-control input-3-lines"
+                  formControlName="text"
+                ></textarea>
+              </div>
+              <div class="w-auto text-end">
+                <button
+                  class="btn btn-secondary btn-minus"
+                  (click)="
+                    $event.preventDefault();
+                    removeDataRow('bulletPointsArray', i)
+                  "
+                >
+                  <fa-icon [icon]="minusIcon" class="minus-icon"></fa-icon>
+                </button>
+              </div>
+            </ng-container>
+          </div>
+          <div class="d-flex justify-content-end">
+            <button
+              class="btn btn-primary btn-plus"
+              (click)="$event.preventDefault(); addDataRow('bulletPointsArray')"
+            >
+              <fa-icon [icon]="plusIcon" class="plus-icon"></fa-icon>
+            </button>
+          </div>
+        </div>
+
+        <ng-container>
+          <div class="row mt-4">
+            <div class="col-12 col-md-6">
+              <label class="form-label">Karta A+</label>
+              <div>
+                <label class="custom-file-upload">
+                  <input
+                    type="file"
+                    class="file-input"
+                    accept="image/*"
+                    (change)="uploadMainFile($event, 'fileMain')"
+                  />
+                  <ng-container *ngIf="myForm.value.fileMain; else elseBlock">
+                    <span class="custom-file-upload--text">{{
+                      myForm.value.fileMain.name
+                    }}</span>
+                    <img src="assets/images/icon-ready.svg" />
+                  </ng-container>
+                  <ng-template #elseBlock>
+                    <span class="custom-file-upload--text"
+                      >Wgraj plik (970px szerokości)</span
+                    >
+                    <img src="assets/images/icon-image.svg"
+                  /></ng-template>
+                </label>
+              </div>
             </div>
+          </div>
+        </ng-container>
 
-            <div class="d-flex justify-content-end">
-                <button class="btn btn-primary btn-main-submit mt-5" type="submit"
-                (submit)="$event.preventDefault(); submitForm()">Wyślij 
-                    <fa-icon [icon]="arrowRightIcon"></fa-icon>
-                </button> 
+        <div formArrayName="filesSecondary">
+          <label class="form-label mt-4"
+            >Grafiki na listing (max 6 grafik)</label
+          >
+
+          <div
+            class="row mb-3"
+            *ngFor="
+              let file of getDataControls('filesSecondary');
+              let i = index
+            "
+          >
+            <ng-container [formGroupName]="i">
+              <div
+                class="col-12 col-md-6 d-flex flex-row justify-content-between"
+              >
+                <label class="custom-file-upload w-100">
+                  <input
+                    type="file"
+                    class="file-input"
+                    accept="image/*"
+                    formControlName="file"
+                    (change)="onUploadFiles($event, i)"
+                  />
+                  <ng-container
+                    *ngIf="
+                      myForm.value['filesSecondary'][i].file;
+                      else elseBlock
+                    "
+                  >
+                    <span class="custom-file-upload--text">{{
+                      images[i]?.name
+                    }}</span>
+                    <img src="assets/images/icon-ready.svg" />
+                  </ng-container>
+                  <ng-template #elseBlock>
+                    <span class="custom-file-upload--text"
+                      >Wgraj plik (970px szerokości)</span
+                    >
+                    <img src="assets/images/icon-image.svg"
+                  /></ng-template>
+                </label>
+              </div>
+              <div class="col-2 text-end">
+                <button
+                  class="btn btn-secondary btn-minus"
+                  (click)="
+                    $event.preventDefault(); removeDataRow('filesSecondary', i)
+                  "
+                >
+                  <fa-icon [icon]="minusIcon" class="minus-icon"></fa-icon>
+                </button>
+              </div>
+            </ng-container>
+          </div>
+          <div class="row">
+            <div class="col-12 col-md-8 d-flex justify-content-end">
+              <button
+                class="btn btn-primary btn-plus"
+                (click)="$event.preventDefault(); addDataRow('filesSecondary')"
+              >
+                <fa-icon [icon]="plusIcon" class="plus-icon"></fa-icon>
+              </button>
             </div>
-        </form>
+          </div>
+        </div>
+
+        <div class="d-flex justify-content-end">
+          <button
+            class="btn btn-primary btn-main-submit mt-5"
+            type="submit"
+            (submit)="$event.preventDefault(); submitForm()"
+          >
+            Wyślij
+            <fa-icon [icon]="arrowRightIcon"></fa-icon>
+          </button>
+        </div>
+      </form>
     </div>
+  </div>
 </div>
