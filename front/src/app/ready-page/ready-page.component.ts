@@ -1,4 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+import { ProjectService } from '../service/project.service';
+import { DomSanitizer } from '@angular/platform-browser';
 
 @Component({
   selector: 'app-ready-page',
@@ -7,9 +9,17 @@ import { Component, OnInit } from '@angular/core';
 })
 export class ReadyPageComponent implements OnInit {
 
-  constructor() { }
+  data: any;
+  file: any;
+  constructor(private service: ProjectService, private sanitizer: DomSanitizer) {
+    this.data = this.service.data;
+  }
 
   ngOnInit(): void {
+    let url = URL.createObjectURL(this.data.fileMain);
+
+    this.file = this.sanitizer.bypassSecurityTrustUrl(url);
+    
   }
 
 }

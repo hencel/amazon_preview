@@ -11,6 +11,7 @@ const routes: Routes = [
   { path: 'main-form', component: MainFormComponent},
   { path: 'guide-post', component: GuidePostComponent},
   { path: 'links-catalog', component: LinksCatalogComponent},
+  { path: 'ready-page', component: ReadyPageComponent},
   { path: '', component: LoggingComponent},
   { path: '**', component: ReadyPageComponent}
 ];
