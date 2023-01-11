@@ -4,6 +4,7 @@ import { FormBuilder, FormGroup, FormArray, FormControl } from '@angular/forms';
 import { HttpClient } from '@angular/common/http';
 import { Router } from '@angular/router';
 import { ProjectService } from '../service/project.service';
+import { mainAddress, products, mediaData } from '../config';
 
 @Component({
   selector: 'app-main-form',
@@ -20,7 +21,7 @@ export class MainFormComponent implements OnInit {
 
   myForm: FormGroup;
 
-  constructor(private builder: FormBuilder, private router: Router, private service: ProjectService) {
+  constructor(private builder: FormBuilder, private router: Router, private service: ProjectService, private http: HttpClient) {
     this.myForm = this.builder.group({
       mainFormName: [''],
       mainFormTitle: [''],
@@ -108,9 +109,27 @@ export class MainFormComponent implements OnInit {
     this.images.splice(index, 1, file);
   }
 
-  submitForm() {
-    this.router.navigate(['ready-page']);
+  submitForm(): void {
+    const formData: any = new FormData();
+    formData.append('mainFormName', this.myForm.get('mainFormName')?.value);
+    formData.append('mainFormTitle', this.myForm.get('mainFormTitle')?.value);
+    formData.append('specDataArray', this.myForm.get('specDataArray')?.value);
+    formData.append('bulletPointsArray', this.myForm.get('bulletPointsArray')?.value);
+    formData.append('fileMain', this.myForm.get('fileMain')?.value);
+    formData.append('filesSecondary', this.myForm.get('filesSecondary')?.value);
 
-    this.service.passReadyData(this.myForm.value)
+    const url = mainAddress + products;
+
+    this.http
+      .post(url, formData)
+      .subscribe({
+        next: (response) => console.log(response),
+        error: (error) => console.log(error),
+      });
+
+    // this.router.navigate(['ready-page']);
+
+    // this.service.passReadyData(this.myForm.value)
   }
+
 }

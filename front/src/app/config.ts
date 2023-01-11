@@ -1,5 +1,5 @@
 export const mainAddress = 'https://amazon.rmadev.pl/api';
-
-export const textData = '/products';
-
+//Post and get products from db
+export const products = '/products';
+//Post and get medias from db
 export const mediaData = '/media_objects';
