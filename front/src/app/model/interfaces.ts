@@ -6,3 +6,11 @@ export interface SpecItem {
 export interface BulletPoint {
     text: string
 }
+
+export interface LoginToken {
+    token: string
+}
+export interface LoginObject {
+    username: string,
+    password: string
+}

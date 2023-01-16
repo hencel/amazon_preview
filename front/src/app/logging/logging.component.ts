@@ -3,6 +3,8 @@ import { faArrowRight } from '@fortawesome/free-solid-svg-icons';
 import { Router } from '@angular/router';
 import { mainAddress, login } from '../config';
 import { HttpClient } from '@angular/common/http';
+import { ProjectService } from '../service/project.service';
+import { LoginToken, LoginObject } from '../model/interfaces';
 
 @Component({
   selector: 'app-logging',
@@ -15,7 +17,9 @@ export class LoggingComponent implements OnInit {
   email: string = '';
   password: string = '';
 
-  constructor(private router: Router, private http: HttpClient) { }
+  authWrong: boolean = false;
+
+  constructor(private router: Router, private http: HttpClient, private service: ProjectService) { }
 
   ngOnInit(): void {
   }
@@ -26,13 +30,17 @@ export class LoggingComponent implements OnInit {
 
 
   makeLogin() {
-    const url = mainAddress + login;
-    const data = {"username": this.email, "password": this.password};
-    this.http
-      .post(url,data)
-      .subscribe({
-        next: (response) => console.log(response),
-        error: (error) => {console.log(error)},
-      });
+    const url: string = mainAddress + login;
+    const data: LoginObject = {"username": this.email, "password": this.password};
+    this.service.postAuth(url, data).subscribe({
+      next: (response: LoginToken) => {
+        if(response.hasOwnProperty('token')) {
+          this.service.saveLocalStorage('amz_token', response.token);
+        } else {
+          this.authWrong = true;
+        }
+      },
+      error: (error) => {console.log(error)},
+    })
   }
 }
