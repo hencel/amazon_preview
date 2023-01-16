@@ -4,17 +4,29 @@
       <form>
         <div class="mb-3">
           <label for="inputEmail1" class="form-label">Login</label>
-          <input type="email" class="form-control" id="inputEmail1" />
+          <input
+            type="email"
+            class="form-control"
+            id="inputEmail1"
+            [(ngModel)]="email"
+            [ngModelOptions]="{ standalone: true }"
+          />
         </div>
         <div class="mb-3">
           <label for="inputPassword1" class="form-label">Hasło</label>
-          <input type="password" class="form-control" id="inputPassword1" />
+          <input
+            type="password"
+            class="form-control"
+            id="inputPassword1"
+            [(ngModel)]="password"
+            [ngModelOptions]="{ standalone: true }"
+          />
         </div>
         <div class="d-flex justify-content-end">
           <button
             type="submit"
             class="btn btn-primary btn-main-submit"
-            (click)="tempSubmit()"
+            (click)="makeLogin()"
           >
             Wyślij
             <fa-icon [icon]="arrowRightIcon"></fa-icon>
