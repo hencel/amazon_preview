@@ -1,7 +1,7 @@
 <div class="container">
   <div class="row justify-content-center mt-5">
     <div class="col-12 col-md-6">
-      <form>
+      <form (ngSubmit)="makeLogin()">
         <div class="mb-3">
           <label for="inputEmail1" class="form-label">Login</label>
           <input
@@ -23,11 +23,7 @@
           />
         </div>
         <div class="d-flex justify-content-end">
-          <button
-            type="submit"
-            class="btn btn-primary btn-main-submit"
-            (click)="makeLogin()"
-          >
+          <button type="submit" class="btn btn-primary btn-main-submit">
             Wyślij
             <fa-icon [icon]="arrowRightIcon"></fa-icon>
           </button>
