@@ -34,8 +34,10 @@ export class LoggingComponent implements OnInit {
     const data: LoginObject = {"username": this.email, "password": this.password};
     this.service.postAuth(url, data).subscribe({
       next: (response: LoginToken) => {
+        console.log(response);
         if(response.hasOwnProperty('token')) {
           this.service.saveLocalStorage('amz_token', response.token);
+          this.router.navigate(['main-form']);
         } else {
           this.authWrong = true;
         }
