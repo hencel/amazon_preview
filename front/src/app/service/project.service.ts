@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { LoginToken, LoginObject } from '../model/interfaces';
 
 @Injectable({
@@ -15,7 +15,10 @@ export class ProjectService {
   }
 
   public postAuth(url: string, data: LoginObject) {
-    return this.http.post<LoginToken>(url, data);
+    const options = { headers: new HttpHeaders({
+      'Content-type': 'application/x-www-form-urlencoded',
+    })};
+    return this.http.post<LoginToken>(url, data, options);
   }
 
   public saveLocalStorage(key: string, value: string) {
