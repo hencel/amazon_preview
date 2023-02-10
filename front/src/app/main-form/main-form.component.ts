@@ -110,7 +110,7 @@ export class MainFormComponent implements OnInit {
   }
 
   submitForm(): void {
-    const formData: any = new FormData();
+    const formData = new FormData();
     formData.append('mainFormName', this.myForm.get('mainFormName')?.value);
     formData.append('mainFormTitle', this.myForm.get('mainFormTitle')?.value);
     formData.append('specDataArray', this.myForm.get('specDataArray')?.value);
@@ -120,12 +120,18 @@ export class MainFormComponent implements OnInit {
 
     const url = mainAddress + products;
 
-    this.http
-      .post(url, formData)
-      .subscribe({
-        next: (response) => console.log(response),
-        error: (error) => console.log(error),
-      });
+    console.log(formData);
+
+    this.service.postMainData(url, formData).subscribe({
+      next: (response) => {
+        console.log('Działa');
+        console.log(response);
+      },
+      error: (error) => {
+        console.log('Nie działa :(')
+        console.log(error);
+      },
+    })
 
     // this.router.navigate(['ready-page']);
 
