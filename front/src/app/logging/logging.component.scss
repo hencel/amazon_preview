@@ -1,0 +1,7 @@
+@import "../shared/variables.scss";
+
+.btn {
+    &[disabled] {
+        background-color: $primary;
+    }
+}

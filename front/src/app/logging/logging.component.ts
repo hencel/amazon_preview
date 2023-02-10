@@ -18,10 +18,12 @@ export class LoggingComponent implements OnInit {
   password: string = '';
 
   authWrong: boolean = false;
+  requestProgress: boolean = false;
 
   constructor(private router: Router, private http: HttpClient, private service: ProjectService) { }
 
   ngOnInit(): void {
+    
   }
 
   tempSubmit() {
@@ -31,10 +33,11 @@ export class LoggingComponent implements OnInit {
 
   makeLogin() {
     const url: string = mainAddress + login;
-    const data: LoginObject = {"username": this.email, "password": this.password};
+    const data: LoginObject = {"email": this.email, "password": this.password};
+    this.requestProgress = true;
     this.service.postAuth(url, data).subscribe({
       next: (response: LoginToken) => {
-        console.log(response);
+        this.requestProgress = false;
         if(response.hasOwnProperty('token')) {
           this.service.saveLocalStorage('amz_token', response.token);
           this.router.navigate(['main-form']);
@@ -42,7 +45,12 @@ export class LoggingComponent implements OnInit {
           this.authWrong = true;
         }
       },
-      error: (error) => {console.log(error)},
+      error: (error) => {
+        this.requestProgress = false;
+        this.authWrong = true;
+      },
     })
   }
+
+
 }
