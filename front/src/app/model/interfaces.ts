@@ -11,6 +11,6 @@ export interface LoginToken {
     token: string
 }
 export interface LoginObject {
-    username: string,
+    email: string,
     password: string
 }

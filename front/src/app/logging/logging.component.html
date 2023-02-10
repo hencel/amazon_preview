@@ -23,7 +23,11 @@
           />
         </div>
         <div class="d-flex justify-content-end">
-          <button type="submit" class="btn btn-primary btn-main-submit">
+          <button
+            type="submit"
+            class="btn btn-primary btn-main-submit"
+            [disabled]="requestProgress"
+          >
             Wyślij
             <fa-icon [icon]="arrowRightIcon"></fa-icon>
           </button>

@@ -9,16 +9,19 @@ export class ProjectService {
   constructor(private http: HttpClient) { }
 
   data: Object = {};
+  optionsJson = { headers: new HttpHeaders({
+    "Access-Control-Allow-Origin" : "*",
+    "Access-Control-Allow-Methods" : "GET,POST,PUT,DELETE,OPTIONS",
+    "Access-Control-Allow-Headers": "Content-Type, Access-Control-Allow-Headers, Authorization, X-Requested-With",
+    'Content-Type': 'application/json'
+  })};
 
   public passReadyData(res: Object) {
     this.data = res;
   }
 
   public postAuth(url: string, data: LoginObject) {
-    const options = { headers: new HttpHeaders({
-      'Content-type': 'application/x-www-form-urlencoded',
-    })};
-    return this.http.post<LoginToken>(url, data, options);
+    return this.http.post<LoginToken>(url, data, this.optionsJson);
   }
 
   public saveLocalStorage(key: string, value: string) {
