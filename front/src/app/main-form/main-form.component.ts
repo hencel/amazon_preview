@@ -110,6 +110,7 @@ export class MainFormComponent implements OnInit {
   }
 
   submitForm(): void {
+
     const formData = new FormData();
     formData.append('mainFormName', this.myForm.get('mainFormName')?.value);
     formData.append('mainFormTitle', this.myForm.get('mainFormTitle')?.value);
@@ -118,24 +119,43 @@ export class MainFormComponent implements OnInit {
     formData.append('fileMain', this.myForm.get('fileMain')?.value);
     formData.append('filesSecondary', this.myForm.get('filesSecondary')?.value);
 
+    // const formData2: string[] = [
+    //   this.myForm.get('mainFormName')?.value,
+    //   this.myForm.get('mainFormTitle')?.value,
+    //   this.myForm.get('specDataArray')?.value,
+    //   this.myForm.get('bulletPointsArray')?.value
+    // ];
+
     const url = mainAddress + products;
 
-    console.log(formData);
-
-    this.service.postMainData(url, formData).subscribe({
-      next: (response) => {
-        console.log('Działa');
-        console.log(response);
-      },
-      error: (error) => {
-        console.log('Nie działa :(')
-        console.log(error);
-      },
-    })
+    console.log(this.myForm.value);
 
     // this.router.navigate(['ready-page']);
 
     // this.service.passReadyData(this.myForm.value)
+
+    this.service.postMainData(url, this.myForm.value).subscribe({
+      next: (response) => {
+        console.log('Działa');
+        console.log(response);
+        this.router.navigate(['ready-page']);
+
+        this.service.passReadyData(this.myForm.value)
+      },
+      error: (error) => {
+        console.log('Nie działa :(')
+        console.log(error);
+        this.router.navigate(['ready-page']);
+
+        this.service.passReadyData(this.myForm.value)
+      },
+    })
   }
 
+  tempSubmitForm() {
+    this.router.navigate(['ready-page']);
+
+    this.service.passReadyData(this.myForm.value)
+  }
+  
 }

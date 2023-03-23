@@ -18,8 +18,12 @@ export class ProjectService {
   })};
   optionsForm = { headers: new HttpHeaders({
     "Access-Control-Allow-Origin" : "*",
-    "Access-Control-Allow-Headers": "Content-Type, Access-Control-Allow-Headers, Authorization, X-Requested-With",
-    "Content-Type": 'multipart/form-data',
+    "Access-Control-Allow-Headers": "Access-Control-Allow-Headers, Authorization, enctype, ProcessData, content-disposition",
+    // 'Content-Type': 'multipart/form-data',
+    'enctype': 'multipart/form-data',
+    'content-disposition': 'form-data',
+    'name': 'data[]',
+    'ProcessData': 'false',
     "Authorization": "Bearer " + this.getLocalStorage('amz_token')
   })}
 
@@ -39,7 +43,7 @@ export class ProjectService {
     return localStorage.getItem(key)
   }
 
-  public postMainData(url: string, data: FormData) {
+  public postMainData(url: string, data: FormGroup) { 
     return this.http.post(url, data, this.optionsForm);
   }
 }
